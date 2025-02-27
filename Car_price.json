@@ -1,0 +1,197 @@
+{
+  "name": "Car price",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "=https://www.iranjib.ir/showgroup/45/%D9%82%DB%8C%D9%85%D8%AA-%D8%AE%D9%88%D8%AF%D8%B1%D9%88-%D8%AA%D9%88%D9%84%DB%8C%D8%AF-%D8%AF%D8%A7%D8%AE%D9%84/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        320,
+        0
+      ],
+      "id": "e5192b83-435f-44fa-9653-52b4af8e6dc1",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.data }}",
+        "options": {
+          "lineStartEscape": {}
+        }
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        600,
+        160
+      ],
+      "id": "81e58450-c2f5-4822-8b83-bd7828b27309",
+      "name": "Markdown"
+    },
+    {
+      "parameters": {
+        "chatId": "=-1002445331356",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1120,
+        120
+      ],
+      "id": "bafd0f3f-9dac-41bc-9870-d4184e7f596f",
+      "name": "Telegram",
+      "webhookId": "ecd34bd6-8079-4962-b8dc-dd2ffe52715a",
+      "credentials": {
+        "telegramApi": {
+          "id": "aK4ZkAEgpZZr18Up",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=- تاریخ و ساعت الان : {{ $now }}\n\nوظیفه\n-میخوام انتهای هر پیام هم بصورت حرفه ای هشتگ گذاری کنی \n- آیدی کانال آخرین خط @dolar_tala_sekeh_arz \n- تا میتونی رسمی و حرفه ای صحبت کن\n- از صحبت های اضافی مثل سلام و خداحافظ اجتناب کن \nنمونه قالب خروجی:\n\n📅 پنج‌شنبه 02 اسفند 1403 \nسایپا 🚗\nsahand ➡️ 630\n\nمدیران خودرو 🚗\nایکس ۲۲ پرو دستی ➡️ 654\n\nاین الگو برای همه دسته بندی ها و خودروها در نظر بگیر\nقیمت ها رو حتما بدون صفر بزن مثلا 600,000,000 رو فقط بنویس 600\n\n{{ $json.data }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        780,
+        0
+      ],
+      "id": "281dcabe-638e-40e7-8a39-28709484b0b8",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {
+          "maxOutputTokens": 2048,
+          "temperature": 0.4,
+          "topK": 32,
+          "topP": 1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        740,
+        360
+      ],
+      "id": "5316ddb6-52a3-4280-8b57-fee2f2553c3d",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "X3obsariIdMYRrhQ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 4
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d8b3244f-129b-43c0-8596-b66661e029d6",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {
+    "AI Agent2": [
+      {
+        "json": {
+          "output": "📅 شنبه 04 اسفند 1403\n\nایران خودرو 🚗\nوانت آریسان ➡️ 515\nسورن پلاس (XU7P) ➡️ 694\nسورن پلاس (رینگ فولادی) ➡️ 794\nسورن پلاس (فول) ➡️ 816\nسورن پلاس دوگانه‌سوز (کپسول کوچک) ➡️ 835\nسورن پلاس دوگانه‌سوز (کپسول بزرگ) ➡️ 854\nدنا پلاس بورسی ➡️ 871\nدنا پلاس MT6 ➡️ 922\nدنا پلاس MT6 (رینگ فولادی) ➡️ 910\nدنا پلاس توربو اتوماتیک (آپشنال) ➡️ 1,130\nپژو 207 موتور TU3 ➡️ 752\nپژو 207 دنده‌ای هیدرولیک ➡️ 811\nپژو 207 دنده‌ای پانوراما ➡️ 885\nپژو 207 اتوماتیک ➡️ 1,000\nپژو 207 اتوماتیک پانوراما ➡️ 1,015\nرانا پلاس ➡️ 705\nتارا دستی V1 ➡️ 886\nتارا اتوماتیک V4 ➡️ 1,076\nهایما اس 5 (S5) ➡️ 1,590\nهایما اس 7 (S7) ➡️ 1,820\nهایما اس 7 (S7) پرو ➡️ 1,845\nهایما 8 اس (8S) ➡️ 2,240\nهایما 7X ➡️ 1,875\nپیکاپ فوتون (اتوماتیک) ➡️ 2,405\nشاین مکس ➡️ 1,950\nشاین مکس (هیبرید) ➡️ 2,020\nری را ➡️ 1,610\nلونا برقی GRE ➡️ 1,193\n\nسایپا 🚗\nسهند G ➡️ 670\nسهند S ➡️ 558\nاطلس ➡️ 585\nساینا GLX ➡️ 489\nساینا S ➡️ 483\nساینا GX دوگانه سوز ➡️ 586\nساینا S اتوماتیک ➡️ 630\nکوییک اتوماتیک ➡️ 650\nکوییک RS ➡️ 484\nکوییک S ➡️ 482\nکوییک GX ➡️ 485\nکوییک GXR ➡️ 504\nشاهین GL ➡️ 809\nشاهین G (سانروف) ➡️ 870\nشاهین اتوماتیک G ➡️ 977\nشاهین اتوماتیک پلاس ➡️ 1,264\nسایپا 151 ➡️ 362\nسایپا 151 (لاینر) ➡️ 366\nوانت زامیاد ➡️ 627\nوانت زامیاد (رادیال) ➡️ 638\nوانت زامیاد گازسوز ➡️ 689\nوانت زامیاد گازسوز (رادیال) ➡️ 697\nکارون ➡️ 884\nچانگان CS35 فول 2024 ➡️ 1,950\nچانگان CS55 مدل 2024 ➡️ 2,630\nزوتی DL5 ➡️ 1,265\n\nمدیران خودرو 🚗\nX22 پرو دستی ➡️ 1,022\nX33 کراس (دستی) ➡️ 1,158\nX33 کراس (اتوماتیک) ➡️ 1,260\nX55 پرو ➡️ 1,680\nآریزو 5 اسپورت ➡️ 1,530\nآریزو 6 پرو ➡️ 1,805\nآریزو6 جی‌تی ➡️ 1,995\nآریزو 8 ➡️ 2,865\nتیگو 7 پرمیوم ➡️ 2,300\nتیگو 7 پرومکس ➡️ 2,640\nتیگو 7 پرو (هیبرید) ➡️ 2,560\nفونیکس FX ➡️ 2,380\nتیگو 8 پرو (هیبرید) ➡️ 3,180\nتیگو 8 پرومکس (IE) ➡️ 3,370\nاکستریم LX ➡️ 2,685\nاکستریم TXL ➡️ 3,720\nاکستریم VX ➡️ 4,700\n\nکرمان موتور 🚗\nبک X3 ➡️ 1,280\nجک J4 ➡️ 959\nجک EJ7 ➡️ 1,320\nکی‌ام‌سی J7 ➡️ 1,785\nکی‌ام‌سی A5 ➡️ 1,755\nکی‌ام‌سی T8 ➡️ 1,780\nکی‌ام‌سی T9 ➡️ 2,590\nکی‌ام‌سی X5 ➡️ 1,883\nهونگچی E-QM5 ➡️ 1,510\n\nبهمن موتور 🚗\nرسپکت 2 ➡️ 1,620\nفیدلیتی پرستیژ (5 نفره) ➡️ 2,590\nفیدلیتی پرستیژ (7 نفره) ➡️ 2,650\nدیگنیتی پرایم ➡️ 1,860\nدیگنیتی پرستیژ ➡️ 2,410\nبستیون T77 ➡️ 1,850\nهونگچی H5 ➡️ 3,645\nهاوال H6 ➡️ 2,750\nکوراندو (تیپ 1) ➡️ 2,900\nکوراندو (تیپ 2) ➡️ 3,030\nبی‌وای‌دی سانگ ➡️ 3,520\n\nسایر شرکت ها 🚗\nتیگارد X35 ➡️ 1,485\nلاماری ایما ➡️ 2,160\nلاماری هیبرید ➡️ 2,540\nآسنا دنده ای (توربو) ➡️ 1,950\nمکث کلوت اتوماتیک (تیپ 3) ➡️ 1,892\nدایون Y7 ➡️ 1,910\nفردا SX5 ➡️ 1,480\nفردا T5 ➡️ 1,725\nفردا 511 ➡️ 1,050\n\n#قیمت_خودرو #ایران_خودرو #سایپا #مدیران_خودرو #کرمان_موتور #بهمن_موتور #خودرو_داخلی #خودرو_وارداتی @dolar_tala_sekeh_arz\n"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "355743b6-4970-491f-ad2c-dbc58b06cf16",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3afe6b3f4309a67933e2f4eeb88283c2ca6f153a429bc0b9a82f4e4fc9a89dcd"
+  },
+  "id": "IiOCXRZhtwiStSga",
+  "tags": []
+}

@@ -1,0 +1,162 @@
+{
+  "name": "Android weekly",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://androidweekly.net/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -800,
+        -560
+      ],
+      "id": "d2ff9f1a-bd81-4823-93f2-4d9d6242db57",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=تاریخ و ساعت الان : {{ $now }}\n\nقوانین\n- تاریخ رو تبدیل به شمسی و ابتدای کل متن بزار\n- میخوام مقالات آخرین روز رو ببینم\n- اگر تعداد مقالات از 4 تا کمتز بودو مقالات روز گذشته هم بیار\n- حد اکثر 5 مقاله رو بیار\n- از حاشیه رفتن و بحث های دیگه کاملا خودداری کن\n- موقع ترجمه سعی کن مطلب رو درک کنی و ترجمه کنی \n- کلمات تخصصی هرگز ترجمه نشه \n- عنوان مقاله ترجمه نشه\n- طول کل متن نباید از یک پیام کانال تلگرام بیشتر بشه حتما تعداد رو کنترل کن\n\nقالب خروجی\n\n📰 *عنوان*\n\n📝 *خلاصه*  \n\nترجمه خلاصه \n\n🔗 *لینک:*  \n[🌍 مطالعه مقاله](https://link/)\n\n━━━━━━━━━━━━━━━━\n\n\n\n{{ $('HTTP Request').item.json.data }}\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        -140,
+        -480
+      ],
+      "id": "f2a8b97b-dda1-4165-9bae-afcd7f70c45e",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "chatId": "-1002388720145",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        20,
+        -480
+      ],
+      "id": "e51fa311-2aa4-4417-a952-6d51b0867f39",
+      "name": "Telegram",
+      "webhookId": "c7a306f4-695a-41f6-8385-935b8dc6615e",
+      "credentials": {
+        "telegramApi": {
+          "id": "aK4ZkAEgpZZr18Up",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {
+          "maxOutputTokens": 2048,
+          "temperature": 0.4,
+          "topK": 32,
+          "topP": 1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        -260
+      ],
+      "id": "82a27670-79da-4c2a-8f8a-beceda5d8891",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "X3obsariIdMYRrhQ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 4
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1060,
+        -620
+      ],
+      "id": "e7f5d218-8f42-46a6-94c0-2d61cdb1c0c3",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "09b90f8b-2ff6-4207-bb99-247f55743972",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3afe6b3f4309a67933e2f4eeb88283c2ca6f153a429bc0b9a82f4e4fc9a89dcd"
+  },
+  "id": "VchRxiLxxH74gkZH",
+  "tags": []
+}

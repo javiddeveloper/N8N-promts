@@ -1,0 +1,189 @@
+{
+  "name": "Dollar, Gold, Coin",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "=https://www.tgju.org/",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        200,
+        0
+      ],
+      "id": "93f7fa79-99f8-44a6-a23f-d42ef8f1f532",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.data }}",
+        "options": {
+          "lineStartEscape": {}
+        }
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        400,
+        0
+      ],
+      "id": "705855a4-8a74-4437-b8ce-0b5715fa0214",
+      "name": "Markdown"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=- تاریخ و ساعت الان : {{ $now }}\n- به عنوان یک دستیار میخوام از این متن قیمت های ارزها و همچنین انواع طلا رو در بیاری و بصورت کاملا خلاصه زیر هم لیست کنی\n- میخوام انتهای هر پیام هم بصورت حرفه ای هشتگ گذاری کنی بر اساس اطلاعات موجود\n- آیدی کانال آخرین خط @dolar_tala_sekeh_arz \n- تا میتونی رسمی و حرفه ای صحبت کن\n- از صحبت های اضافی مثل سلام و خدا حافظ اجتناب کن فقط قیمت بده همین\n\nنمونه قالب خروجی:\n\n📅 پنج‌شنبه 02 اسفند 1403 - 13:40\n\n ارز: (برحسب ریال)\n\n‏🇺🇸  دلار آمریکا: 93,850 \n‏🇪🇺  یورو: 97,920 \n‏🇦🇪  درهم امارات: 25,638 \n‏🇬🇧  پوند انگلیس: 118,320 \n‏🇹🇷  لیر ترکیه: 2,580 \n‏🇨🇳  یوان چین: 12,880 \n‏🇷🇺  روبل روسیه: 1,058 \n‏🇮🇶  صد دینار عراق: 69.2 \n‏🇦🇫  افغانی: 1,295 \n\nطلا: (برحسب ریال)\n\n‏🟡 سکه امامی: 78,605,000 \n‏🟡 سکه بهار آزادی: 73,000,000 \n‏🟡 نیم سکه: 42,900,000 \n‏🟡 ربع سکه: 22,400,000 \n‏🟡 سکه گرمی: 11,100,000 \n‏🟡 هر گرم طلای 18 عیار: 6,930,400 \n‏🟡 انس طلا: 2,952.87 دلار\n\nارز دیجیتال: (برحسب دلار)\n\n‏🔸 بیتکوین: 95,596 \n‏🔸 اتریوم: 2,706.82 \n‏🔸 بایننس کوین: 654.8169 \n‏🔸 سولانا: 169.971 \n‏🔸 تتر: 92,251 ریال\n\n📡 @dolar_tala_sekeh_arz  \n\nحباب سکه هم طبق مدل بالا در بخش سکه ثرار بده\n\n{{ $json.data }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        680,
+        0
+      ],
+      "id": "c94caa01-57ec-4f3d-ac78-16cf5c8c667e",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {
+          "maxOutputTokens": 2048,
+          "temperature": 0.4,
+          "topK": 32,
+          "topP": 1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        580,
+        200
+      ],
+      "id": "379dfc0f-afd0-4f5c-86ae-080311022cd4",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "X3obsariIdMYRrhQ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "=-1002445331356",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1080,
+        0
+      ],
+      "id": "1b1a0fa2-5f13-418b-a1ac-45519fedac64",
+      "name": "Telegram",
+      "webhookId": "84fbdb65-e390-4d3f-b344-2297a49b86d1",
+      "credentials": {
+        "telegramApi": {
+          "id": "aK4ZkAEgpZZr18Up",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 4
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "39f35c51-e571-4207-b6d2-03be4a9a7dec",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "50cf7740-4e5c-4b40-9112-5cf120302837",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3afe6b3f4309a67933e2f4eeb88283c2ca6f153a429bc0b9a82f4e4fc9a89dcd"
+  },
+  "id": "MoKdJBWcxgoh2EEU",
+  "tags": []
+}
