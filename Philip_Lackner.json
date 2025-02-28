@@ -2,17 +2,6 @@
   "name": "Philip Lackner",
   "nodes": [
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        -660,
-        -140
-      ],
-      "id": "39fa4f6e-baab-4f25-b543-67cee6651aa3",
-      "name": "When clicking ‘Test workflow’"
-    },
-    {
       "parameters": {
         "url": "https://www.youtube.com/@PhilippLackner/videos",
         "options": {}
@@ -20,8 +9,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        -440,
-        -140
+        -680,
+        -440
       ],
       "id": "da2651f5-e45c-4cb7-a0be-615607f9b68f",
       "name": "HTTP Request"
@@ -29,13 +18,13 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=- یه لیست از ویوهای یوتیوب هست که میخوام توی این قالب داده ها رو استخراج کنی\n\nقالب خروجی :\n[\n{\n\"id\":\"شناسه ویدیو\",\n\"title-fa\":\"عنوان فارسی\",\n\"title-en\":\"عنوان اصلی\",\n\"thumbnail\":\"عکس ویدیو\",\n\"date-view-length\":\"تاریخ - تعداد بازدید - طول ویدیو\"\n\"url\":\"https://www.youtube.com/ادامه لینک ویدیو\",\n},\nادامه لیست ...\n]\n\nداده های از اینجا تامین میشه\n\nشناسه ویدیو داخل html :\n\"content\":{\"videoRenderer\":{\"videoId\":\"4EA9Ne7mKxw\",..}\n\nعکس ویدیو داخل html :\n\"content\":{\"videoRenderer\":{\"videoId\":\"4EA9Ne7mKxw\",\"thumbnail\":{\"thumbnails\":[{\"url\":\"https://i.ytimg.com/vi/4EA9Ne7mKxw/hqdefault.jpg...}\n\nتاریخ - تعداد بازدید - طول ویدیو داخل html :\n\"accessibilityData\":{\"label\":\"Should Developers Be Afraid of AI? by Philipp Lackner 7,813 views 1 day ago 9 minutes, 37 seconds\"}}\n\nعنوان اصلی ویدیو داخل html :\n\"runs\":[{\"text\":\"Should Developers Be Afraid of AI?\"}\n\nعنوان فارسی ویدیو :\nعنوان اصلی ویدیو رو به فارسی ترجمه کن و طوری ترجمه کن که برنامه نویس اندروید بتونه متوجه کانسپت اصلی بشه\n\nادامه لینک ویدیو داخل html :\n\"webCommandMetadata\":{\"url\":\"watch?v=4EA9Ne7mKxw\"}\n\nقوانین :\n- خروجی JSON هست\n- از قالب خروجی اطلاعات اضافه تری نده\n- اگر داده ای رو نتونستی پیدا کنی null بزار\n- برای بخش ترجمه اگر یک واژه اندرویدی پیدا کردی نیاز نیست اون کلمه رو ترجمه کنی\n- برای هر خروجی 2 ویدیو آخر رو انتخاب کن\n- اصلا از ``` و json استفاده نکن\n\n {{ $json.data }}"
+        "text": "=- یه لیست از ویوهای یوتیوب هست که میخوام توی این قالب داده ها رو استخراج کنی\n\nقالب خروجی :\n[\n{\n\"id\":\"شناسه ویدیو\",\n\"title-fa\":\"عنوان فارسی\",\n\"title-en\":\"عنوان اصلی\",\n\"desc-en\":\"توضیح اصلی\",\n\"desc-fa\":\"توضیح فارسی\",\n\"thumbnail\":\"عکس ویدیو\",\n\"date-view-length\":\"تاریخ - تعداد بازدید - طول ویدیو\"\n\"url\":\"https://www.youtube.com/ادامه لینک ویدیو\",\n},\nادامه لیست ...\n]\n\nداده های از اینجا تامین میشه\n\nشناسه ویدیو داخل html :\n\"content\":{\"videoRenderer\":{\"videoId\":\"4EA9Ne7mKxw\",..}\n\nعکس ویدیو داخل html :\n\"content\":{\"videoRenderer\":{\"videoId\":\"4EA9Ne7mKxw\",\"thumbnail\":{\"thumbnails\":[{\"url\":\"https://i.ytimg.com/vi/4EA9Ne7mKxw/hqdefault.jpg...}\n\nتاریخ - تعداد بازدید - طول ویدیو داخل html :\n\"accessibilityData\":{\"label\":\"Should Developers Be Afraid of AI? by Philipp Lackner 7,813 views 1 day ago 9 minutes, 37 seconds\"}}\n\nعنوان اصلی ویدیو داخل html :\n\"runs\":[{\"text\":\"Should Developers Be Afraid of AI?\"}\n\nعنوان فارسی ویدیو :\nعنوان اصلی ویدیو رو به فارسی ترجمه کن و طوری ترجمه کن که برنامه نویس اندروید بتونه متوجه کانسپت اصلی بشه\n\nتوضیح اصلی داخل html:\n<meta itemprop=\"description\" content=\"AI models like GPT, Gemini and Claude are getting better and better over time. In this video I share my own view on the trends, which scenarios could happen ...\">\n\nتوضیح فارسی  :\nتوضیح اصلی ویدیو رو به فارسی ترجمه کن و طوری ترجمه کن که برنامه نویس اندروید بتونه متوجه کانسپت اصلی بشه\n\nادامه لینک ویدیو داخل html :\n\"webCommandMetadata\":{\"url\":\"watch?v=4EA9Ne7mKxw\"}\n\nقوانین :\n- خروجی JSON هست\n- از قالب خروجی اطلاعات اضافه تری نده\n- اگر داده ای رو نتونستی پیدا کنی null بزار\n- برای بخش ترجمه اگر یک واژه اندرویدی پیدا کردی نیاز نیست اون کلمه رو ترجمه کنی\n- برای هر خروجی 2 ویدیو آخر رو انتخاب کن\n- اصلا از ``` و json استفاده نکن\n\n {{ $json.data }}"
       },
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.5,
       "position": [
-        -180,
-        -140
+        -520,
+        -540
       ],
       "id": "f6600348-ab1f-45e2-85f9-8558f5744d8f",
       "name": "Basic LLM Chain"
@@ -48,8 +37,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        -240,
-        80
+        -440,
+        -200
       ],
       "id": "56939c80-ac7d-45d0-8445-994e7c60cd5b",
       "name": "Google Gemini Chat Model",
@@ -63,7 +52,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=- ساعت و تاریخ : {{ $now }}\n\n- یه لیست از ویوهای یوتیوب هست که میخوام توی این قالب نمایش بدی\n\nقالب خروجی :\n\n📅 تاریخ و ساعت\n\n💎 *{{ $json['title-en'] }}*\n\n📰 {{ $json['title-fa'] }}\n\n📅 {{ $json['date-view-length'] }}\n\n[🔗 مشاهده ویدیو]({{ $json.url }})  \n\nقوانین :\n- تاریخ و ساعت شمسی ابتدای پست\n- از قالب خروجی اطلاعات اضافه تری نده\n- لیست ویدیو ها رو زیر هم قرار بده\n- اگر آیدی ویدیو رو از قبل داشتی اونو از لیست خروجی حذف کن\n- لینک ویدیو حتما با قالبی باشه که تلگرام بتونه نمایش بده\n- این مقدار حتما ترحمه بشه به فارسی {{ $json['date-view-length'] }}",
+        "text": "=- ساعت و تاریخ : {{ $now }}\n\n- یه لیست از ویوهای یوتیوب هست که میخوام توی این قالب نمایش بدی\n\nقالب خروجی :\n\n📅 ⏳ تاریخ و ساعت  \n\n💎✨ *{{ $json['title-en'] }}* ✨💎  \n\n📰 {{ $json['title-fa'] }}  \n\n📝 *توضیح اصلی:*\n📖🔍 {{ $json['desc-en'] }}  \n\n📝 *توضیح فارسی:* \n🗣️💡 {{ $json['desc-fa'] }}  \n\n📅⏱️ {{ $json['date-view-length'] }}  \n\n🎥🔗 [مشاهده ویدیو]({{ $json.url }})\n\n\nقوانین :\n- تاریخ و ساعت شمسی ابتدای پست\n- از قالب خروجی اطلاعات اضافه تری نده\n- لیست ویدیو ها رو زیر هم قرار بده\n- اگر آیدی ویدیو رو از قبل داشتی اونو از لیست خروجی حذف کن و ارسال نکن\n- برای موارد تکراری که قبلا ارسال شده هیچی نگو و پیام رو نادیده بگیر\n- لینک ویدیو حتما با قالبی باشه که تلگرام بتونه نمایش بده\n- این مقدار حتما ترجمه بشه به فارسی {{ $json['date-view-length'] }}",
         "options": {
           "systemMessage": "تو یک ادمین تلگرام حرفه ای هستی که داده ها رو توی کانال قرار میدی"
         }
@@ -71,8 +60,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.7,
       "position": [
-        180,
-        -180
+        -140,
+        -520
       ],
       "id": "3fd074ff-2c7f-4d07-a2e6-775818a6992e",
       "name": "AI Agent"
@@ -86,8 +75,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        280,
-        160
+        -20,
+        -300
       ],
       "id": "233042ec-1822-4a9b-9cac-e4eef8d76f81",
       "name": "Window Buffer Memory"
@@ -100,8 +89,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        180,
-        80
+        -180,
+        -280
       ],
       "id": "8ef82d24-4ed3-4a73-89fd-b31fdd536b92",
       "name": "Google Gemini Chat Model1",
@@ -125,8 +114,8 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        540,
-        -140
+        520,
+        -400
       ],
       "id": "258e836b-8386-4608-95dc-b04465927924",
       "name": "Telegram1",
@@ -137,6 +126,59 @@
           "name": "Telegram account"
         }
       }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -820,
+        -600
+      ],
+      "id": "b836414d-3fd5-4037-803c-59dac417b333",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "71d73e5e-36a6-4301-990f-449b456b8489",
+              "leftValue": "={{ $json.output }}",
+              "rightValue": "تکراری",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        -520
+      ],
+      "id": "34511ca2-5695-4b1d-9a6d-9a8a84abed7a",
+      "name": "If"
     }
   ],
   "pinData": {
@@ -144,117 +186,30 @@
       {
         "json": {
           "id": "4EA9Ne7mKxw",
-          "title-fa": "آیا توسعه دهندگان باید از هوش مصنوعی بترسند؟",
+          "title-fa": "آیا توسعه‌دهندگان باید از هوش مصنوعی بترسند؟",
           "title-en": "Should Developers Be Afraid of AI?",
+          "desc-en": "AI models like GPT, Gemini and Claude are getting better and better over time. In this video I share my own view on the trends, which scenarios could happen including how likely I think each...",
+          "desc-fa": "مدل‌های هوش مصنوعی مانند GPT، Gemini و Claude به مرور زمان بهتر و بهتر می‌شوند. در این ویدیو، دیدگاه خودم را در مورد ترندها به اشتراک می‌گذارم، چه سناریوهایی ممکن است رخ دهد و احتمال وقوع هر کدام چقدر است...",
           "thumbnail": "https://i.ytimg.com/vi/4EA9Ne7mKxw/hqdefault.jpg",
-          "date-view-length": "1 day ago - 7,813 views - 9 minutes, 37 seconds",
+          "date-view-length": "2 days ago - 7,989 views - 9 minutes, 37 seconds",
           "url": "https://www.youtube.com/watch?v=4EA9Ne7mKxw"
         }
       },
       {
         "json": {
           "id": "ZTebNp-FyYY",
-          "title-fa": "مقایسه Single State Field با State Data Class در ViewModel - کدام بهتر است؟",
+          "title-fa": "فیلدهای تک حالتی در مقابل Data Class State در ViewModel - کدام بهتر است؟",
           "title-en": "Single State Fields VS. State Data Class In Your ViewModel - What's Best?",
+          "desc-en": "In this video I'll compare the two most popular approaches to state management (MVVM vs. MVI) and share the advantages and disadvantages of each.\\n\\n❄️ Winter Sale Last Chance! ❄️ Get...",
+          "desc-fa": "در این ویدیو دو رویکرد محبوب برای مدیریت state (MVVM در مقابل MVI) را مقایسه می‌کنم و مزایا و معایب هر کدام را به اشتراک می‌گذارم.\\n\\n❄️ آخرین فرصت فروش زمستانی! ❄️",
           "thumbnail": "https://i.ytimg.com/vi/ZTebNp-FyYY/hqdefault.jpg",
-          "date-view-length": "4 days ago - 11,663 views - 16 minutes",
+          "date-view-length": "5 days ago - 11,742 views - 16 minutes",
           "url": "https://www.youtube.com/watch?v=ZTebNp-FyYY"
-        }
-      },
-      {
-        "json": {
-          "id": "xAslJ-f9PWs",
-          "title-fa": "توضیح تمام Class ها در کاتلین",
-          "title-en": "All Classes In Kotlin Explained",
-          "thumbnail": "https://i.ytimg.com/vi/xAslJ-f9PWs/hqdefault.jpg",
-          "date-view-length": "8 days ago - 12,522 views - 35 minutes, 6 seconds",
-          "url": "https://www.youtube.com/watch?v=xAslJ-f9PWs"
-        }
-      },
-      {
-        "json": {
-          "id": "DZHn17qg5_Y",
-          "title-fa": "۳ روشی که مهاجمان می توانند برنامه اندرویدی شما را مهندسی معکوس کنند (+ نحوه محافظت از آن!)",
-          "title-en": "3 Ways How Attackers Can Reverse Engineer Your Android App (+ How You Protect It!)",
-          "thumbnail": "https://i.ytimg.com/vi/DZHn17qg5_Y/hqdefault.jpg",
-          "date-view-length": "11 days ago - 14,201 views - 34 minutes, 31 seconds",
-          "url": "https://www.youtube.com/watch?v=DZHn17qg5_Y"
-        }
-      },
-      {
-        "json": {
-          "id": "gIUe2OOzohw",
-          "title-fa": "راهنمای کامل پشتیبانی از Edge-to-Edge در Android 15+ (Compose + XML)",
-          "title-en": "The Full Guide to Supporting Edge-to-Edge On Android 15+ (Compose + XML)",
-          "thumbnail": "https://i.ytimg.com/vi/gIUe2OOzohw/hqdefault.jpg",
-          "date-view-length": "2 weeks ago - 10,138 views - 17 minutes, 57 seconds",
-          "url": "https://www.youtube.com/watch?v=gIUe2OOzohw"
-        }
-      },
-      {
-        "json": {
-          "id": "PG3dz15hr1c",
-          "title-fa": "ویژگی‌های جدید Android 16، پیش‌نمایش Compose Multiplatform و بیشتر - اخبار اندروید فوریه 2025",
-          "title-en": "New Android 16 Features, Compose Multiplatform Preview & More - Android News February 2025",
-          "thumbnail": "https://i.ytimg.com/vi/PG3dz15hr1c/hqdefault.jpg",
-          "date-view-length": "2 weeks ago - 14,295 views - 14 minutes, 21 seconds",
-          "url": "https://www.youtube.com/watch?v=PG3dz15hr1c"
-        }
-      },
-      {
-        "json": {
-          "id": "ZPM4flsAd9w",
-          "title-fa": "چه زمانی از معماری Single Activity در اندروید استفاده کنیم؟",
-          "title-en": "When to Use a Single Activity Architecture On Android?",
-          "thumbnail": "https://i.ytimg.com/vi/ZPM4flsAd9w/hqdefault.jpg",
-          "date-view-length": "3 weeks ago - 16,856 views - 11 minutes, 23 seconds",
-          "url": "https://www.youtube.com/watch?v=ZPM4flsAd9w"
-        }
-      },
-      {
-        "json": {
-          "id": "Nr9C09A9Nl4",
-          "title-fa": "نحوه شروع کار با Firebase Test Lab در Android Studio",
-          "title-en": "How to Get Started With Firebase Test Lab In Android Studio",
-          "thumbnail": "https://i.ytimg.com/vi/Nr9C09A9Nl4/hqdefault.jpg",
-          "date-view-length": "3 weeks ago - 5,216 views - 19 minutes",
-          "url": "https://www.youtube.com/watch?v=Nr9C09A9Nl4"
-        }
-      },
-      {
-        "json": {
-          "id": "_qb87PN7jlI",
-          "title-fa": "Dagger-Hilt در مقابل Koin در مقابل Manual Dependency Injection - کدام را انتخاب کنیم؟",
-          "title-en": "Dagger-Hilt vs. Koin vs. Manual Dependency Injection - Pick THIS",
-          "thumbnail": "https://i.ytimg.com/vi/_qb87PN7jlI/hqdefault.jpg",
-          "date-view-length": "4 weeks ago - 12,416 views - 21 minutes",
-          "url": "https://www.youtube.com/watch?v=_qb87PN7jlI"
-        }
-      },
-      {
-        "json": {
-          "id": "GFo5KPaY-zU",
-          "title-fa": "IO کارآمد با خواندن و نوشتن بافر شده در Kotlin - مبانی IO",
-          "title-en": "Efficient IO With Buffered Reading & Writing In Kotlin - IO Essentials",
-          "thumbnail": "https://i.ytimg.com/vi/GFo5KPaY-zU/hqdefault.jpg",
-          "date-view-length": "1 month ago - 4,388 views - 7 minutes",
-          "url": "https://www.youtube.com/watch?v=GFo5KPaY-zU"
         }
       }
     ]
   },
   "connections": {
-    "When clicking ‘Test workflow’": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "HTTP Request": {
       "main": [
         [
@@ -314,6 +269,34 @@
       "main": [
         [
           {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram1": {
+      "main": [
+        []
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
             "node": "Telegram1",
             "type": "main",
             "index": 0
@@ -326,7 +309,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "c716171d-8fc3-465e-9fdf-1cf70920d622",
+  "versionId": "a2d4230f-8b25-4993-a7c0-470c40e8b7ba",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "3afe6b3f4309a67933e2f4eeb88283c2ca6f153a429bc0b9a82f4e4fc9a89dcd"
